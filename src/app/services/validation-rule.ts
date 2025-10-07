@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface ValidationRuleData {
   id?: string;
@@ -27,7 +28,7 @@ export interface ValidationResponse {
   providedIn: 'root'
 })
 export class ValidationRuleService {
-  private apiUrl = 'http://localhost:8000/api/validation_rules';
+  private apiUrl = environment.apiUrl;
   private rulesSubject = new BehaviorSubject<ValidationRuleData[]>([]);
 
   constructor(private http: HttpClient) {}
