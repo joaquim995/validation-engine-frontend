@@ -35,7 +35,7 @@ Your backend is already deployed on Render at:
 
 4. **Configure Build Settings**:
    - **Build command**: `npm run build -- --configuration production`
-   - **Publish directory**: `dist`
+   - **Publish directory**: `dist/validation-engine-frontend/browser`
    - **Note**: The `netlify.toml` file will auto-configure these settings
    - Click "Deploy site"
 
@@ -89,7 +89,7 @@ Your backend is already deployed on Render at:
 
 3. **Go to Netlify**:
    - Visit https://app.netlify.com/drop
-   - Drag and drop the entire `dist` folder
+   - Drag and drop the `dist/validation-engine-frontend/browser` folder
 
 ## Configuration Files Created
 

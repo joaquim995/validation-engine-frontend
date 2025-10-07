@@ -1,6 +1,6 @@
 [build]
   command = "npm install && npm run build -- --configuration production"
-  publish = "dist"
+  publish = "dist/validation-engine-frontend/browser"
 
 [[plugins]]
   package = "@netlify/angular-runtime"
