@@ -1,0 +1,91 @@
+<div class="admin-panel">
+  <h2>Validation Rules Administration</h2>
+  
+  <div class="admin-actions">
+    <button (click)="addRule()" class="btn btn-primary">Add New Rule</button>
+  </div>
+
+  <!-- Rule Form -->
+  <div *ngIf="showForm" class="rule-form">
+    <h3>{{ editing ? 'Edit Rule' : 'Add New Rule' }}</h3>
+    
+    <div class="form-group">
+      <label for="objectType">Object Type:</label>
+      <select id="objectType" [(ngModel)]="newRule.object_type" required>
+        <option value="">Select Object Type</option>
+        <option *ngFor="let type of objectTypes" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="expression">Rule Expression:</label>
+      <textarea 
+        id="expression" 
+        [(ngModel)]="newRule.expression" 
+        rows="3" 
+        placeholder="e.g., ISBLANK(Priority) or AND(Status = &quot;Open&quot;, ISBLANK(Priority))"
+        required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="errorMessage">Error Message:</label>
+      <input 
+        id="errorMessage" 
+        [(ngModel)]="newRule.error_message" 
+        rows="2" 
+        placeholder="e.g., Priority is required."
+        required>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="newRule.is_active">
+        Active
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button (click)="saveRule()" class="btn btn-primary">Save Rule</button>
+      <button (click)="cancelForm()" class="btn btn-secondary">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Rules List -->
+  <div class="rules-list">
+    <h3>Existing Rules</h3>
+    <p>Debug: Rules count = {{ rules.length }}</p>
+    
+    <div *ngIf="rules.length === 0" class="no-rules">
+      No validation rules found.
+    </div>
+
+    <div *ngFor="let rule of rules; let i = index" class="rule-item" [class.inactive]="!rule.is_active">
+      <div class="rule-header">
+        <h4>Rule {{ i + 1 }}: {{ rule.object_type }}</h4>
+        <div class="rule-actions">
+          <button (click)="toggleRule(rule)" 
+                  [class]="rule.is_active ? 'btn btn-warning' : 'btn btn-success'">
+            {{ rule.is_active ? 'Deactivate' : 'Activate' }}
+          </button>
+          <button (click)="editRule(rule)" class="btn btn-info">Edit</button>
+          <button (click)="deleteRule(rule)" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+      
+      <div class="rule-content">
+        <div class="rule-expression">
+          <strong>Expression:</strong> {{ rule.expression }}
+        </div>
+        <div class="rule-message">
+          <strong>Error Message:</strong> {{ rule.error_message }}
+        </div>
+        <div class="rule-status">
+          <strong>Status:</strong> 
+          <span [class]="rule.is_active ? 'status-active' : 'status-inactive'">
+            {{ rule.is_active ? 'Active' : 'Inactive' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

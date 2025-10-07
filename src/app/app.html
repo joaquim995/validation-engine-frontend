@@ -1,0 +1,31 @@
+<div class="app">
+  <header class="app-header">
+    <div class="app-title">{{ title() }}</div>
+    <nav class="app-nav">
+      <button 
+        (click)="showWorkOrderForm()" 
+        [class.active]="currentView === 'work-order'"
+        class="nav-button">
+        Work Order Form
+      </button>
+      <button 
+        (click)="showAdmin()" 
+        [class.active]="currentView === 'admin'"
+        class="nav-button">
+        Admin Panel
+      </button>
+    </nav>
+  </header>
+
+  <main class="app-content">
+    <div [style.display]="currentView === 'work-order' ? 'block' : 'none'">
+      <app-work-order-form></app-work-order-form>
+    </div>
+    
+    <div [style.display]="currentView === 'admin' ? 'block' : 'none'">
+      <app-admin [isVisible]="currentView === 'admin'"></app-admin>
+    </div>
+  </main>
+</div>
+
+<router-outlet />
