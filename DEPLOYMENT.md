@@ -15,39 +15,46 @@ Your backend is already deployed on Render at:
 
 ### Option 1: Deploy via Git (Recommended)
 
-1. **Push your code to GitHub/GitLab/Bitbucket** (if not already done):
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+2. **Push your code to GitHub/GitLab/Bitbucket** (if not already done):
    ```bash
    git add .
-   git commit -m "Configure for Netlify deployment"
+   git commit -m "Configure for Netlify deployment with SSR"
    git push origin main
    ```
 
-2. **Connect to Netlify**:
+3. **Connect to Netlify**:
    - Go to https://app.netlify.com
    - Click "Add new site" → "Import an existing project"
    - Choose your Git provider and authorize Netlify
    - Select your repository: `validation-engine-frontend`
 
-3. **Configure Build Settings**:
+4. **Configure Build Settings**:
    - **Build command**: `npm run build -- --configuration production`
-   - **Publish directory**: `dist/validation-engine-frontend/browser`
+   - **Publish directory**: `dist`
+   - **Note**: The `netlify.toml` file will auto-configure these settings
    - Click "Deploy site"
 
-4. **Wait for deployment** (usually takes 2-3 minutes)
+5. **Wait for deployment** (usually takes 2-3 minutes)
+   - Netlify will automatically detect and use the `@netlify/angular-runtime` plugin for SSR support
 
-5. **Your site is live!** Netlify will provide you with a URL like:
+6. **Your site is live!** Netlify will provide you with a URL like:
    - `https://random-name-123456.netlify.app`
 
 ### Option 2: Deploy via Netlify CLI
 
-1. **Install Netlify CLI**:
+1. **Install dependencies**:
    ```bash
-   npm install -g netlify-cli
+   npm install
    ```
 
-2. **Build your project**:
+2. **Install Netlify CLI**:
    ```bash
-   npm run build -- --configuration production
+   npm install -g netlify-cli
    ```
 
 3. **Login to Netlify**:
@@ -57,25 +64,32 @@ Your backend is already deployed on Render at:
 
 4. **Deploy**:
    ```bash
-   netlify deploy --prod
+   netlify deploy --prod --build
    ```
 
 5. **Follow the prompts**:
    - Choose "Create & configure a new site"
    - Select your team
    - Site name: (optional, or press Enter for random name)
-   - Publish directory: `dist/validation-engine-frontend/browser`
+   - The build settings will be read from `netlify.toml`
 
-### Option 3: Manual Drag & Drop
+### Option 3: Manual Drag & Drop (Not Recommended for SSR)
 
-1. **Build your project**:
+**Note**: This option won't support SSR features. Use Git or CLI deployment for full SSR support.
+
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+2. **Build your project**:
    ```bash
    npm run build -- --configuration production
    ```
 
-2. **Go to Netlify**:
+3. **Go to Netlify**:
    - Visit https://app.netlify.com/drop
-   - Drag and drop the `dist/validation-engine-frontend/browser` folder
+   - Drag and drop the entire `dist` folder
 
 ## Configuration Files Created
 
@@ -86,12 +100,14 @@ The following files have been created/modified for deployment:
 - **`src/environments/environment.prod.ts`**: Production environment (Render backend)
 
 ### 2. Netlify Configuration
-- **`netlify.toml`**: Build and deployment settings
+- **`netlify.toml`**: Build and deployment settings with Angular SSR runtime
 - **`public/_redirects`**: Routing configuration for single-page app
+- **`src/server.ts`**: Updated for Netlify compatibility with Angular SSR
 
 ### 3. Updated Files
 - **`angular.json`**: Added file replacement for production builds
 - **`src/app/services/validation-rule.ts`**: Updated to use environment-based API URL
+- **`package.json`**: Added @netlify/angular-runtime dependency
 
 ## Environment Configuration
 

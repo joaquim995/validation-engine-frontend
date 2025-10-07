@@ -1,11 +1,9 @@
 [build]
-  publish = "dist/validation-engine-frontend/browser"
   command = "npm install && npm run build -- --configuration production"
+  publish = "dist"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+[[plugins]]
+  package = "@netlify/angular-runtime"
 
 [[headers]]
   for = "/*"
